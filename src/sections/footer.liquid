@@ -6,7 +6,7 @@
       {%- assign social_handle = social | handleize -%}
       {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
       {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
-
+    
       {% if settings[social_link] != blank %}
         <li>
           <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
@@ -72,3 +72,6 @@
   }
 
 {% endschema %}
+{% javascript %}
+
+{% endjavascript %}
