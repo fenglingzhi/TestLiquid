@@ -1,11 +1,10 @@
 {% if section.settings.title != blank %}
   <h2>{{ section.settings.title | escape }}</h2>
 {% endif %}
-
 {% for block in section.blocks limit: section.blocks.size %}
   <div {{ block.shopify_attributes }}>
     {%- assign collection = collections[block.settings.collection] -%}
-
+    {{block}}
     <a href="{% if collection == empty %}#{% else %}{{ collection.url }}{% endif %}">
       {% if collection.image != blank %}
         {{ collection | img_url: '480x480' | img_tag: collection.title }}
