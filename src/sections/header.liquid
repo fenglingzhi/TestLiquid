@@ -4,105 +4,224 @@
       max-width: {{ section.settings.logo_max_width }}px;
     }
   {% endif %}
+    a{
+      text-decoration: none;
+      color: #333;
+    }
+    #headers{
+      padding: 0 10px;
+      position: relative;
+      left: 0;
+      right: 0;
+      top: 0;
+      box-shadow: inset 0 -1px 0 0 #F2F2F2;
+      z-index: 1100 !important;
+      background: #fff;
+      color: #000;
+      font-size: 0.75em;
+      background: #87cefa;
+    }
+    .wrapper {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+      -webkit-box-pack: justify;
+      -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      position: static;
+      max-width: 1350px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .wrap_left{
+      display: block;
+      float: none;
+      width: 21%;
+      -webkit-flex-basis: 21%;
+      -ms-flex-preferred-size: 21%;
+      flex-basis: 21%;
+    }
+    .wrap_center{
+      display: block;
+      float: none;
+      width: 58%;
+      -webkit-flex-basis: 58%;
+      -ms-flex-preferred-size: 58%;
+      flex-basis: 58%;
+    }
+    .wrap_right{
+      display: block;
+      float: none;
+      width: 21%;
+      -webkit-flex-basis: 21%;
+      -ms-flex-preferred-size: 21%;
+      flex-basis: 21%;
+    }
+    .logo_title a{
+      text-decoration: none;
+      color: #fff;
+    }
+    .site-nav{
+      list-style: none;
+    padding: 0;
+    display: inline-block;
+    vertical-align: middle;
+    /* margin: 19px 0; */
+    margin: 0;
+    }
+    .site-nav li{
+          border-right: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 1100;
+    float: left;
+    font-size: 16px;
+    line-height: 60px;
+    margin: 0 30px;
+    height: 50px;
+    }
+    .site-nav li:hover{
+      border-bottom: 2px solid #38bd56;
+    }
+    .site-nav li a{
+      color: #fff;
+    }
+    .wrap_right input::-webkit-input-placeholder {
+      color:#fff;
+      opacity:1;
+　　}
+
 </style>
 <div data-section-id="{{ section.id }}" data-section-type="header-section">
-  <header role="banner">
-    {% if template.name == 'index' %}
-      <h1 itemscope itemtype="http://schema.org/Organization">
-    {% else %}
-      <div class="h1" itemscope itemtype="http://schema.org/Organization">
-    {% endif %}
-        <a href="/" itemprop="url" class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
-          {% if section.settings.logo != blank %}
-            {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
-            <img src="{{ section.settings.logo | img_url: image_size }}"
-                 srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-                 alt="{{ section.settings.logo.alt | default: shop.name }}"
-                 itemprop="logo">
-          {% else %}
-            {{ shop.name }}
-          {% endif %}
-        </a>
-    {% if template.name == 'index' %}
-      </h1>
-    {% else %}
-      </div>
-    {% endif %}
-
-    <a href="/cart">
-      {% include 'icon-cart' %}
-      {{ 'layout.cart.title' | t }}
-      ({{ cart.item_count }} {{ 'layout.cart.items_count' | t: count: cart.item_count }})
-    </a>
-
-    {% if shop.customer_accounts_enabled %}
-      <ul>
-        {% if customer %}
-          <li>
-            {% if customer.first_name != blank %}
-              {% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
-              {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
-            {% else %}
-              <a href="/account">{{ 'layout.customer.account' | t }}</a>
-            {% endif %}
-          </li>
-          <li>
-            {{ 'layout.customer.log_out' | t | customer_logout_link }}
-          </li>
+  <header role="banner" id="headers">
+    <div class="wrapper">
+      <div class="wrap_left">
+        <!-- logo部分 -->
+        {% if template.name == 'index' %}
+          <h1 itemscope itemtype="http://schema.org/Organization" class="logo_title">
         {% else %}
-          <li>
-            {{ 'layout.customer.log_in' | t | customer_login_link }}
-          </li>
-          <li>
-            {{ 'layout.customer.create_account' | t | customer_register_link }}
-          </li>
+          <div class="h1" itemscope itemtype="http://schema.org/Organization">
         {% endif %}
-      </ul>
-    {% endif %}
-
-    <form action="/search" method="get" role="search">
-      <label for="Search" class="label-hidden">
-        {{ 'general.search.placeholder' | t }}
-      </label>
-      <input type="search"
-             name="q"
-             id="Search"
-             value="{{ search.terms | escape }}"
-             placeholder="{{ 'general.search.placeholder' | t }}">
-      <button type="submit" class="btn">
-        {% include 'icon-search' %}
-        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-      </button>
-    </form>
-
-  </header>
-
-  <nav role="navigation">
-    <ul class="site-nav">
-      {% for link in linklists[section.settings.main_linklist].links %}
-        {%- assign child_list_handle = link.title | handleize -%}
-        {% if menus[child_list_handle].links != blank %}
-          <li class="site-nav--has-submenu{% if link.active %} site-nav--active{% endif %}">
-            <a href="{{ link.url }}" class="site-nav__link">
-              {{ link.title }}
-              {% include 'icon-arrow-down' %}
+            <a href="/" itemprop="url" class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
+              {% if section.settings.logo != blank %}
+                {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+                <img src="{{ section.settings.logo | img_url: image_size }}"
+                     srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                     alt="{{ section.settings.logo.alt | default: shop.name }}"
+                     itemprop="logo">
+              {% else %}
+                {{ shop.name }}
+              {% endif %}
             </a>
-            <ul class="site-nav__submenu">
-              {% for childlink in menus[child_list_handle].links %}
-                <li {% if childlink.active %}class="site-nav--active"{% endif %}>
-                  <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          </li>
+        {% if template.name == 'index' %}
+          </h1>
         {% else %}
-          <li {% if link.active %}class="site-nav--active"{% endif %}>
-            <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
-          </li>
+          </div>
         {% endif %}
-      {% endfor %}
-    </ul>
-  </nav>
+        <!-- logo部分 -->
+      </div>
+
+
+      <div class="wrap_center">
+        <!-- 导航 -->
+        <nav role="navigation" style="height: 100%;">
+          <ul class="site-nav">
+            {% for link in linklists[section.settings.main_linklist].links %}
+              {%- assign child_list_handle = link.title | handleize -%}
+              {% if menus[child_list_handle].links != blank %}
+                <li class="site-nav--has-submenu{% if link.active %} site-nav--active{% endif %}">
+                  <a href="{{ link.url }}" class="site-nav__link">
+                    {{ link.title }}
+                    {% include 'icon-arrow-down' %}
+                  </a>
+                  <ul class="site-nav__submenu">
+                    {% for childlink in menus[child_list_handle].links %}
+                      <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+                        <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% else %}
+                <li {% if link.active %}class="site-nav--active"{% endif %}>
+                  <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
+        <!-- 导航 -->
+      </div>
+    
+      <div class="wrap_right">
+        <!-- 搜索 -->
+        <form action="/search" method="get" role="search" style="float: left;
+    height: 100%;
+    padding: 10px 0;">
+          <label for="Search" class="label-hidden">
+            {{ 'general.search.placeholder' | t }}
+          </label>
+          <input type="search"
+                 name="q"
+                 id="Search"
+                 value="{{ search.terms | escape }}"
+                 placeholder="{{ 'general.search.placeholder' | t }}"
+                 style="background: transparent;
+    height: 30px;">
+          <button type="submit" class="btn" style="background: transparent;
+    height: 100%;
+    color: #fff;
+    width: 40px;">
+            {% include 'icon-search' %}
+            <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+          </button>
+        </form>
+        <!-- 搜索 -->
+
+        <!-- 用户信息 -->
+        {% if shop.customer_accounts_enabled %}
+          <ul>
+            {% if customer %}
+              <li>
+                {% if customer.first_name != blank %}
+                  {% capture first_name %}<a href="/account">{{ customer.first_name }}</a>{% endcapture %}
+                  {{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}
+                {% else %}
+                  <a href="/account">{{ 'layout.customer.account' | t }}</a>
+                {% endif %}
+              </li>
+              <li>
+                {{ 'layout.customer.log_out' | t | customer_logout_link }}
+              </li>
+            {% else %}
+              <li>
+                {{ 'layout.customer.log_in' | t | customer_login_link }}
+              </li>
+              <li>
+                {{ 'layout.customer.create_account' | t | customer_register_link }}
+              </li>
+            {% endif %}
+          </ul>
+        {% endif %}
+        <!-- 用户信息 -->
+
+        <!-- 购物车 -->
+        <a href="/cart" style="color: #fff;
+    line-height: 56px;">
+          {% include 'icon-cart' %}
+          {{ 'layout.cart.title' | t }}
+          ({{ cart.item_count }} {{ 'layout.cart.items_count' | t: count: cart.item_count }})
+        </a>
+        <!-- 购物车 -->
+
+      </div>
+    </div>
+  </header>
 </div>
 
 {% schema %}
