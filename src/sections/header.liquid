@@ -102,11 +102,11 @@
     <div class="wrapper">
       <div class="wrap_left">
         <!-- logo部分 -->
-        {% if template.name == 'index' %}
+        <!-- {% if template.name == 'index' %} -->
           <h1 itemscope itemtype="http://schema.org/Organization" class="logo_title">
-        {% else %}
-          <div class="h1" itemscope itemtype="http://schema.org/Organization">
-        {% endif %}
+        <!-- {% else %} -->
+          <!-- <div class="h1 logo_title" itemscope itemtype="http://schema.org/Organization"> -->
+        <!-- {% endif %} -->
             <a href="/" itemprop="url" class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
               {% if section.settings.logo != blank %}
                 {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
@@ -118,11 +118,11 @@
                 {{ shop.name }}
               {% endif %}
             </a>
-        {% if template.name == 'index' %}
+        <!-- {% if template.name == 'index' %} -->
           </h1>
-        {% else %}
-          </div>
-        {% endif %}
+        <!-- {% else %} -->
+          <!-- </div> -->
+        <!-- {% endif %} -->
         <!-- logo部分 -->
       </div>
 

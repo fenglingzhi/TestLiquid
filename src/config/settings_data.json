@@ -3,43 +3,43 @@
   "presets": {
     "Default": {
       "sections": {
-        "collection-list": {
+        "商品分类": {
           "type": "collection-list",
           "blocks": {
-            "collection-list-0": {
+            "black swiming": {
               "type": "collection"
             },
-            "collection-list-1": {
+            "swiming": {
               "type": "collection"
             },
-            "collection-list-2": {
+            "T-shirt": {
               "type": "collection"
             }
           },
           "block_order": [
-            "collection-list-0",
-            "collection-list-1",
-            "collection-list-2"
+            "black swiming",
+            "swiming",
+            "T-shirt"
           ]
         },
-        "featured-collection": {
-          "type": "featured-collection",
-          "settings": {
-            "collection": "frontpage"
-          }
-        },
-        "featured-product": {
-          "type": "featured-product"
-        },
-        "YanM-product": {
-          "type": "YanM-product"
-        }
+        // "featured-collection": {
+        //   "type": "featured-collection",
+        //   "settings": {
+        //     "collection": "frontpage"
+        //   }
+        // },
+        // "featured-product": {
+        //   "type": "featured-product"
+        // },
+        // "YanM-product": {
+        //   "type": "YanM-product"
+        // }
       },
       "content_for_index": [
-        "collection-list",
-        "featured-collection",
-        "featured-product",
-        "YanM-product"
+        "商品分类",
+        // "featured-collection",
+        // "featured-product",
+        // "YanM-product"
       ]
     }
   }
