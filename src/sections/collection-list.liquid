@@ -1,10 +1,19 @@
+<style>
+  .collectionNme{
+      color: red;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px black;
+  }
+</style>
 {% if section.settings.title != blank %}
   <h2>{{ section.settings.title | escape }}</h2>
 {% endif %}
+
 {% for block in section.blocks limit: section.blocks.size %}
-  <div {{ block.shopify_attributes }}>
+
+  <div class="grid__item medium-up--one-quarter"  {{ block.shopify_attributes }}>
     {%- assign collection = collections[block.settings.collection] -%}
-    {{block}}
     <a href="{% if collection == empty %}#{% else %}{{ collection.url }}{% endif %}">
       {% if collection.image != blank %}
         {{ collection | img_url: '480x480' | img_tag: collection.title }}
@@ -15,7 +24,7 @@
         {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
       {% endif %}
 
-      <p>
+      <p class="collectionNme">
         {% if collection == empty %}
           {{ 'homepage.onboarding.collection_title' | t }}
         {% else %}
@@ -24,7 +33,13 @@
       </p>
     </a>
   </div>
+  
+  
+
+
 {% endfor %}
+  <div style="clear: both;"></div>
+
 
 {% if section.blocks.size == 0 %}
   {% include 'no-blocks' %}
