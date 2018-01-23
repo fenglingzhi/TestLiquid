@@ -95,34 +95,29 @@
       color:#fff;
       opacity:1;
 　　}
-
+    .site-nav__submenu{
+      /*display: none;*/
+      background: #38bd56;
+    }
 </style>
 <div data-section-id="{{ section.id }}" data-section-type="header-section">
   <header role="banner" id="headers">
     <div class="wrapper">
       <div class="wrap_left">
-        <!-- logo部分 -->
-        <!-- {% if template.name == 'index' %} -->
-          <h1 itemscope itemtype="http://schema.org/Organization" class="logo_title">
-        <!-- {% else %} -->
-          <!-- <div class="h1 logo_title" itemscope itemtype="http://schema.org/Organization"> -->
-        <!-- {% endif %} -->
-            <a href="/" itemprop="url" class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
-              {% if section.settings.logo != blank %}
-                {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
-                <img src="{{ section.settings.logo | img_url: image_size }}"
-                     srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
-                     alt="{{ section.settings.logo.alt | default: shop.name }}"
-                     itemprop="logo">
-              {% else %}
-                {{ shop.name }}
-              {% endif %}
-            </a>
-        <!-- {% if template.name == 'index' %} -->
-          </h1>
-        <!-- {% else %} -->
-          <!-- </div> -->
-        <!-- {% endif %} -->
+        <!-- logo部分 -->  
+        <h1 itemscope itemtype="http://schema.org/Organization" class="logo_title">
+          <a href="/" itemprop="url" class="site-logo{% if section.settings.logo != blank %} site-header__logo-image{% endif %}">
+            {% if section.settings.logo != blank %}
+              {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
+              <img src="{{ section.settings.logo | img_url: image_size }}"
+                   srcset="{{ section.settings.logo | img_url: image_size }} 1x, {{ section.settings.logo | img_url: image_size, scale: 2 }} 2x"
+                   alt="{{ section.settings.logo.alt | default: shop.name }}"
+                   itemprop="logo">
+            {% else %}
+              {{ shop.name }}
+            {% endif %}
+          </a>
+        </h1>
         <!-- logo部分 -->
       </div>
 
@@ -160,9 +155,7 @@
     
       <div class="wrap_right">
         <!-- 搜索 -->
-        <form action="/search" method="get" role="search" style="float: left;
-    height: 100%;
-    padding: 10px 0;">
+        <form action="/search" method="get" role="search" style="float: left;height: 100%;padding: 10px 0;">
           <label for="Search" class="label-hidden">
             {{ 'general.search.placeholder' | t }}
           </label>
@@ -171,12 +164,8 @@
                  id="Search"
                  value="{{ search.terms | escape }}"
                  placeholder="{{ 'general.search.placeholder' | t }}"
-                 style="background: transparent;
-    height: 30px;">
-          <button type="submit" class="btn" style="background: transparent;
-    height: 100%;
-    color: #fff;
-    width: 40px;">
+                 style="background: transparent;height: 30px;">
+          <button type="submit" class="btn" style="background: transparent;height: 100%;color: #fff;   width: 40px;">
             {% include 'icon-search' %}
             <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
           </button>
@@ -211,8 +200,7 @@
         <!-- 用户信息 -->
 
         <!-- 购物车 -->
-        <a href="/cart" style="color: #fff;
-    line-height: 56px;">
+        <a href="/cart" style="color: #fff;line-height: 56px;">
           {% include 'icon-cart' %}
           {{ 'layout.cart.title' | t }}
           ({{ cart.item_count }} {{ 'layout.cart.items_count' | t: count: cart.item_count }})
@@ -252,3 +240,11 @@
     ]
   }
 {% endschema %}
+
+
+<script>
+  $('.site-nav__submenu').on('click',function(){
+    alert(1)
+  })
+</script>
+
