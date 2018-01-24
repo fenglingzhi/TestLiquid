@@ -75,15 +75,15 @@
     margin: 0;
     }
     .site-nav li{
-          border-right: 0;
-    padding: 0;
-    margin: 0;
-    z-index: 1100;
-    float: left;
-    font-size: 16px;
-    line-height: 60px;
-    margin: 0 30px;
-    height: 50px;
+      border-right: 0;
+      padding: 0;
+      margin: 0;
+      z-index: 1100;
+      float: left;
+      font-size: 16px;
+      line-height: 60px;
+      margin: 0 30px;
+      height: 60px;
     }
     .site-nav li:hover{
       border-bottom: 2px solid #38bd56;
@@ -97,9 +97,63 @@
 　　}
     .site-nav__submenu{
       /*display: none;*/
-      background: #38bd56;
+      overflow: auto;
+      position: absolute;
+      top: 58px;
+      left: 0;
+      background: #fff;
+      height: 338px;
+      padding: 0;
     }
+    .site-nav__submenu li{
+      display: block;
+      list-style: none;
+      clear: both;
+      margin: 12px 0;
+    }
+    .show{
+      display: block;
+    }
+    .site-nav__submenu_wrap{
+      width: 980px;
+      margin: 0 auto;
+      padding: 24px 0;
+      overflow: auto;
+    }
+    .site-nav__submenu_wrap_left{
+      width: 40%;
+      overflow: auto;
+      height: 100%;
+      float: left;
+    }
+    .site-nav__submenu_wrap_right{
+      width: 60%;
+      overflow: auto;
+      height: 100%;
+    }
+    .site-nav__submenu_wrap_left a{
+      color: #ca7200 !important;
+      font-family: "MrsEavesOT-Roman",TimesNewRoman,"Times New Roman",Times,Baskerville,Georgia,serif;
+      font-size: 21px;
+      font-weight: 600;
+    }
+
 </style>
+
+<script>
+  {% javascript %}
+    $('.site-nav__submenu').width($(window).width())
+    // $('.site-nav--has-submenu').hover(
+    //   function(){
+    //     $(this).children('.site-nav__submenu').addClass('show');
+    //   },
+    //   function(){
+    //     $(this).children('.site-nav__submenu').removeClass('show');
+    //   });
+  {% endjavascript %}
+  
+</script>
+
 <div data-section-id="{{ section.id }}" data-section-type="header-section">
   <header role="banner" id="headers">
     <div class="wrapper">
@@ -120,8 +174,6 @@
         </h1>
         <!-- logo部分 -->
       </div>
-
-
       <div class="wrap_center">
         <!-- 导航 -->
         <nav role="navigation" style="height: 100%;">
@@ -130,16 +182,29 @@
               {%- assign child_list_handle = link.title | handleize -%}
               {% if menus[child_list_handle].links != blank %}
                 <li class="site-nav--has-submenu{% if link.active %} site-nav--active{% endif %}">
-                  <a href="{{ link.url }}" class="site-nav__link">
+                  <!-- <a href="{{ link.url }}" class="site-nav__link">
                     {{ link.title }}
                     {% include 'icon-arrow-down' %}
-                  </a>
+                  </a> -->
+                  <a class="site-nav__link">{{ link.title }}</a>
                   <ul class="site-nav__submenu">
-                    {% for childlink in menus[child_list_handle].links %}
-                      <li {% if childlink.active %}class="site-nav--active"{% endif %}>
-                        <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
-                      </li>
-                    {% endfor %}
+                    <div class="site-nav__submenu_wrap">
+                      <div class="site-nav__submenu_wrap_left">
+                        {% for childlink in menus[child_list_handle].links %}
+                          <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+                            <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                          </li>
+                        {% endfor %}
+                      </div>
+                      <div class="site-nav__submenu_wrap_right">
+                        {% for childlink in menus[child_list_handle].links %}
+                          <li {% if childlink.active %}class="site-nav--active"{% endif %}>
+                            <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                          </li>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    
                   </ul>
                 </li>
               {% else %}
@@ -236,15 +301,19 @@
         "id": "main_linklist",
         "label": "Menu",
         "default": "main-menu"
-      }
+      },
+    ],
+    "topSettings": [
+      {
+        "type": "link_list",
+        "id": "top_nav_list",
+        "label": "Main navigation",
+        "default": "main-menu"
+      },
+      
     ]
   }
 {% endschema %}
 
 
-<script>
-  $('.site-nav__submenu').on('click',function(){
-    alert(1)
-  })
-</script>
 
