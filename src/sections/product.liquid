@@ -1,6 +1,57 @@
 <style>
-  
+ ul{ list-style-type:none; width:100%; }
+ .productName{
+    color: #222222;
+    font-size: 32px;
+    line-height: 36px;
+    font-family: "Didact Gothic","Gill Sans",Arial,Helvetica,sans-serif;
+}
+  .ProductPrice {
+      font-family: "Avenir Next LT Pro Bold","Gill Sans",Arial,Helvetica,sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #85CC95;
+    vertical-align: middle;
+}
+  .addToCar{
+      height: 50px;
+      width: 200px;
+      padding: 8px;
+      background-color: #85CC95;
+      font-family: "Avenir Next LT Pro Bold","Gill Sans",Arial,Helvetica,sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 14px;
+      letter-spacing: 1px;
+      color: white;
+  }
+  .chooseType{
+      margin: 10px auto;
+  }
+   .chooseText{
+      font-size: 20px;
+  }
+   .chooseInput{
+      height: 35px;
+    border: 1px solid #00000075;
+    text-indent: 13px;
+    width: 209px;
+  }
+  .rte{
+      font-family: "Avenir Next LT Pro","Gill Sans",Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 24px;
+    color: #7b7b7b;
+    width:80%
+    
+  }
 </style>
+<script>
+  function seeBigPic(src){
+      $(".bigPic").attr("src",src)
+  }
+</script>
 <div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" itemscope itemtype="http://schema.org/Product">
   {%- assign current_variant = product.selected_or_first_available_variant -%}
   {%- assign featured_image = current_variant.featured_image | default: product.featured_image -%}
@@ -10,24 +61,33 @@
   <meta itemprop="brand" content="{{ product.vendor }}">
   <meta itemprop="image" content="{{ featured_image | img_url: '600x600' }}">
   <meta itemprop="description" content="{{ product.description | strip_html | escape }}">
-
-  {% if featured_image != blank %}
-    <img src="{{ featured_image | img_url: '480x480' }}" alt="{{ featured_image.alt | escape }}" data-product-featured-image>
-  {% endif %}
-
-  {% if product.images.size > 1 %}
-    <ul>
-      {% for image in product.images %}
-        <li>
-          <a href="{{ image.src | img_url: '480x480' }}" data-product-single-thumbnail>
-            <img src="{{ image.src | img_url: '160x160' }}" alt="{{ image.alt | escape }}">
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  {% endif %}
-
-  <h1>{{ product.title }}</h1>
+  <div style="height:26px;width:100%"></div>
+  <div class=" grid__item">
+     <div class="grid__item medium-up--one-half">
+        <div class="grid__item  medium-up--one-quarter">
+          {% if product.images.size > 1 %}
+            <ul style="margin:0px 0px">
+              {% for image in product.images %}
+                <li>
+                  {% comment %}<a href="{{ image.src | img_url: '480x480' }}" data-product-single-thumbnail>{% endcomment %}
+                    <img onclick=seeBigPic("{{image.src | img_url: '480x480'}}") src="{{ image.src | img_url: '200x160' }}" width="160" alt="{{ image.alt | escape }}">
+                  {% comment %}</a>{% endcomment %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          
+        </div>
+        <div class="grid__item medium-up--one-half">
+         {% if featured_image != blank %}
+            <img  class="bigPic width="590" src="{{ featured_image | img_url: '480x480' }}" alt="{{ featured_image.alt | escape }}" data-product-featured-image>
+        {% endif %}
+        </div>
+    </div>
+      <div class="grid__item medium-up--one-half">
+       
+        
+        <h1 class="productName">{{ product.title }}</h1>
   <p>{{ product.vendor }}</p>
 
   <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
@@ -38,12 +98,12 @@
     <form action="/cart/add" method="post" enctype="multipart/form-data">
       {% unless product.has_only_default_variant %}
         {% for option in product.options_with_values %}
-          <div class="selector-wrapper js">
-            <label for="SingleOptionSelector-{{ forloop.index0 }}">
+          <div class="chooseType" class="selector-wrapper js">
+            <label class="chooseText" for="SingleOptionSelector-{{ forloop.index0 }}">
               {{ option.name }}
             </label>
 
-            <select
+            <select class="chooseInput"
               id="SingleOptionSelector-{{ forloop.index0 }}"
               data-single-option-selector
               data-index="option{{ option.position }}">
@@ -70,11 +130,11 @@
         {% endfor %}
       </select>
 
-      <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
-      <input type="number" id="Quantity" name="quantity" value="1" min="1">
+      <label class="chooseType chooseText" for="Quantity">{{ 'products.product.quantity' | t }}</label>
+      <input class="chooseInput" type="number" id="Quantity" name="quantity" value="1" min="1">
 
-      <div data-price-wrapper>
-        <span data-product-price>
+      <div style="margin: 26px auto;" data-price-wrapper>
+        <span class="ProductPrice" data-product-price>
           {{ current_variant.price | money }}
         </span>
 
@@ -88,7 +148,7 @@
         {% endif %}
       </div>
 
-      <button
+      <button class="addToCar"
         type="submit"
         name="add"
         data-add-to-cart
@@ -105,7 +165,7 @@
 
   </div>
 
-  <div class="rte">
+  <div class="rte" style="width:80%">
     {{ product.description }}
   </div>
 
@@ -120,6 +180,16 @@
   {% endunless %}
 </div>
 
+        
+        
+        
+      </div>
+  </div>
+
+<div style="clear: both;"></div>
+
+
+  
 {% schema %}
   {
     "name": "Product pages",
