@@ -39,17 +39,35 @@
     width: 209px;
   }
   .rte{
-      font-family: "Avenir Next LT Pro","Gill Sans",Arial,Helvetica,sans-serif;
+    font-family: "Avenir Next LT Pro","Gill Sans",Arial,Helvetica,sans-serif;
     font-size: 14px;
     line-height: 24px;
     color: #7b7b7b;
-    width:80%
-    
+    width: 80%;
+    height: auto;
+    overflow: hidden;
+  }
+
+  .detail{
+        color: #000;
+    font-family: "MrsEavesOT-Roman",TimesNewRoman,"Times New Roman",Times,Baskerville,Georgia,serif;
+    font-size: 16px;
+    line-height: 21px;
+    position: relative;
+    padding-bottom: 12px;
+    border-bottom: solid 1px #979797;
+    cursor: pointer;
+    margin: 27px 0px;
   }
 </style>
 <script>
+//   商品大图切换图片
   function seeBigPic(src){
       $(".bigPic").attr("src",src)
+  }
+//   商品详情展开和收缩
+  function seeMore(idName){
+      $("#"+idName).slideToggle(500)
   }
 </script>
 <div data-section-id="{{ section.id }}" data-section-type="product" data-enable-history-state="true" itemscope itemtype="http://schema.org/Product">
@@ -164,8 +182,8 @@
     </form>
 
   </div>
-
-  <div class="rte" style="width:80%">
+  <div class="detail" onclick="seeMore('detail')"  isOpen="true">Description</div>
+  <div class="rte" id="detail" style="height:auto">
     {{ product.description }}
   </div>
 
